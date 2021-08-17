@@ -10,12 +10,14 @@ SOURCES += \
         backlight.cpp \
         atmosphere.cpp \
         ofono.cpp \
+        ofono_modem.cpp \
         main.cpp
 
 HEADERS += \
         backlight.h \
         atmosphere.h \
-        ofono.h
+        ofono.h \
+        ofono_modem.h
 
 LIBS += -ludev
 
@@ -31,7 +33,7 @@ else: unix:!android: target.path = /usr/bin
 !isEmpty(target.path): INSTALLS += target
 
 dbusdaemon.files = com.github.CutiePiShellCommunityProject.xml
-dbusdaemon.header_flags = -i backlight.h -i atmosphere.h 
+dbusdaemon.header_flags = -i backlight.h -i atmosphere.h -i ofono.h
 
 DBUS_ADAPTORS += \
         dbusdaemon 

@@ -6,6 +6,7 @@
 
 #include "ofono_interface.h"
 #include "ofono_modem_interface.h"
+#include "ofono_modem.h"
 
 typedef QPair<QDBusObjectPath, QVariantMap> ofonoPair;
 typedef QList<ofonoPair> OfonoServices;
@@ -18,11 +19,12 @@ class Ofono : public QObject
     Q_OBJECT
 private:
     org::ofono::Manager *ofono;
-    QList<org::ofono::Modem *> *ofonoModems;
-    QList<org::ofono::NetworkRegistration *> *ofonoNetworks;
+    QList<OfonoModem *> *modemList;
+    QDBusConnection *connection;
 public:
-    Ofono();
+    Ofono(QDBusConnection *connection);
 public Q_SLOTS:
+    unsigned int ModemCount();
 };
 
 #endif // OFONO_H
