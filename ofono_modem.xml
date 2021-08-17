@@ -17,6 +17,22 @@
             <arg name="value" type="v"/>
         </signal>
     </interface>
+    <interface name="org.ofono.NetworkRegistration">
+        <method name="GetProperties">
+            <arg name="properties" type="a{sv}" direction="out"/>
+            <arg name="cards" type="a{oa{sv}}" direction="out"/>
+            <annotation name="org.qtproject.QtDBus.QtTypeName.Out0" value="QVariantMap"/>
+            <annotation name="org.qtproject.QtDBus.QtTypeName.Out1" value="QVariantMap"/>
+        </method>
+        <method name="SetProperty">
+            <arg name="property" type="s" direction="in"/>
+            <arg name="value" type="v" direction="in"/>
+        </method>
+        <signal name="PropertyChanged">
+            <arg name="name" type="s"/>
+            <arg name="value" type="v"/>
+        </signal>
+    </interface>
     <interface name="org.ofono.SimManager">
         <method name="GetProperties">
             <arg name="properties" type="a{sv}" direction="out"/>

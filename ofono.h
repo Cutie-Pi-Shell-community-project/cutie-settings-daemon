@@ -18,6 +18,8 @@ class Ofono : public QObject
     Q_OBJECT
 private:
     org::ofono::Manager *ofono;
+    QList<org::ofono::Modem *> *ofonoModems;
+    QList<org::ofono::NetworkRegistration *> *ofonoNetworks;
 public:
     Ofono();
 public Q_SLOTS:
