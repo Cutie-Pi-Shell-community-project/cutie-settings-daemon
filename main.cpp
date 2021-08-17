@@ -1,6 +1,7 @@
 #include <QCoreApplication>
 #include "backlight.h"
 #include "atmosphere.h"
+#include "ofono.h"
 #include "cutiepishellcommunityproject_adaptor.h"
 
 int main(int argc, char *argv[])
@@ -9,6 +10,7 @@ int main(int argc, char *argv[])
 
     Backlight *backlight = new Backlight();
     Atmosphere *atmosphere = new Atmosphere();
+    Ofono *ofono = new Ofono();
 
     new BacklightAdaptor(backlight);
     new AtmosphereAdaptor(atmosphere);

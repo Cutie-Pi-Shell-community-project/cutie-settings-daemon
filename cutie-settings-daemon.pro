@@ -9,11 +9,13 @@ CONFIG += c++11
 SOURCES += \
         backlight.cpp \
         atmosphere.cpp \
+        ofono.cpp \
         main.cpp
 
 HEADERS += \
         backlight.h \
-        atmosphere.h 
+        atmosphere.h \
+        ofono.h
 
 LIBS += -ludev
 
@@ -35,7 +37,9 @@ DBUS_ADAPTORS += \
         dbusdaemon 
 
 DBUS_INTERFACES += \
-        dbusdaemon 
+        dbusdaemon \
+        ofono.xml \
+        ofono_modem.xml
 
 dbuspolicy.files = com.github.CutiePiShellCommunityProject.SettingsDaemon.conf
 dbuspolicy.path = /usr/share/dbus-1/system.d/
