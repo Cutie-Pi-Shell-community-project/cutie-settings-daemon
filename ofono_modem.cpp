@@ -16,12 +16,12 @@ OfonoModem::OfonoModem(QString path) {
             if (ifaceName == "org.ofono.NetworkRegistration") {
                 this->network = new org::ofono::NetworkRegistration("org.ofono", 
                     path, QDBusConnection::systemBus());
-                connect(this->network, SIGNAL(PropertyChanged(Q_ARGS(QString, QVariant))), this, SLOT(onNetworkPropertyChanged(Q_ARGS(QString, QVariant))));
+                connect(this->network, SIGNAL(PropertyChanged(QString, QVariant)), this, SLOT(onNetworkPropertyChanged(QString, QVariant)));
             }
         }
     }
     
-    connect(this->modem, SIGNAL(PropertyChanged(Q_ARGS(QString, QVariant))), this, SLOT(onModemPropertyChanged(Q_ARGS(QString, QVariant))));
+    connect(this->modem, SIGNAL(PropertyChanged(QString, QVariant)), this, SLOT(onModemPropertyChanged(QString, QVariant)));
 }
 
 bool OfonoModem::GetOnline() {
@@ -76,7 +76,7 @@ void OfonoModem::onModemPropertyChanged(QString name, QVariant value) {
                 if (ifaceName == "org.ofono.NetworkRegistration") {
                     this->network = new org::ofono::NetworkRegistration("org.ofono", 
                         path, QDBusConnection::systemBus());
-                    connect(this->network, SIGNAL(PropertyChanged(Q_ARGS(QString, QVariant))), this, SLOT(onNetworkPropertyChanged(Q_ARGS(QString, QVariant))));
+                    connect(this->network, SIGNAL(PropertyChanged(QString, QVariant)), this, SLOT(onNetworkPropertyChanged(QString, QVariant)));
                 }
             }
         }
