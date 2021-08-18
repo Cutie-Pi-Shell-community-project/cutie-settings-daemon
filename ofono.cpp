@@ -15,6 +15,7 @@ Ofono::Ofono(QDBusConnection *connection)
     qDBusRegisterMetaType<OfonoServices>();
 
     QDBusPendingReply<OfonoServices> ofonoModems = this->ofono->GetModems();
+    connect(this->ofono, SIGNAL(ModemAdded(Q_ARGS(QDBusObjectPath, QVariantMap))), this, SLOT(onModemAdded(Q_ARGS(QDBusObjectPath, QVariantMap))));
     ofonoModems.waitForFinished();
     if (!ofonoModems.isError()) {
         for (int i = 0; i < ofonoModems.value().count(); i++) {
@@ -22,10 +23,23 @@ Ofono::Ofono(QDBusConnection *connection)
             this->modemList->append(modem);
             new ModemAdaptor(modem);
             connection->registerObject(QString("/com/github/CutiePiShellCommunityProject/modem/").append(QString::number(i)), modem);
+            QDBusObjectPath newPath;
+            newPath.setPath(QString("/com/github/CutiePiShellCommunityProject/modem/").append(QString::number(i)));
+            ModemAdded(newPath);
         }
     }
 }
 
 unsigned int Ofono::ModemCount() {
     return modemList->count();
+}
+
+void Ofono::onModemAdded(QDBusObjectPath path, QVariantMap properties) {
+    OfonoModem *modem = new OfonoModem(path.path());
+    this->modemList->append(modem);
+    new ModemAdaptor(modem);
+    connection->registerObject(QString("/com/github/CutiePiShellCommunityProject/modem/").append(QString::number(modemList->count() - 1)), modem);
+    QDBusObjectPath newPath;
+    newPath.setPath(QString("/com/github/CutiePiShellCommunityProject/modem/").append(QString::number(modemList->count() - 1)));
+    ModemAdded(newPath);
 }

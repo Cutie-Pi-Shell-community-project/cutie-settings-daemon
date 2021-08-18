@@ -25,6 +25,9 @@ public:
     Ofono(QDBusConnection *connection);
 public Q_SLOTS:
     unsigned int ModemCount();
+    void onModemAdded(QDBusObjectPath path, QVariantMap properties);
+Q_SIGNALS:
+    void ModemAdded(QDBusObjectPath path);
 };
 
 #endif // OFONO_H
