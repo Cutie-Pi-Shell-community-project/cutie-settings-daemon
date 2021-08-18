@@ -77,6 +77,11 @@ void OfonoModem::onModemPropertyChanged(QString name, QDBusVariant value) {
                     this->network = new org::ofono::NetworkRegistration("org.ofono", 
                         path, QDBusConnection::systemBus());
                     connect(this->network, SIGNAL(PropertyChanged(QString, QDBusVariant)), this, SLOT(onNetworkPropertyChanged(QString, QDBusVariant)));
+                    QDBusPendingReply<QVariantMap> netProperties = network->GetProperties();
+                    netProperties.waitForFinished();
+                    if (!netProperties.isError()) {    
+                        NetNameChanged(netProperties.value().value("Name").toString());
+                    }
                 }
             }
         }
