@@ -61,16 +61,16 @@ QString OfonoModem::GetNetName() {
 
 void OfonoModem::onModemPropertyChanged(QString name, QDBusVariant value) {
     if (name == "Online") {
-        OnlineChanged(QVariant::fromValue(value).toBool());
+        OnlineChanged(value.variant().toBool());
     }
 
     if (name == "Powered") {
-        PowerChanged(QVariant::fromValue(value).toBool());
+        PowerChanged(value.variant().toBool());
     }
 
     if (name == "Interfaces") {
         if (this->network == 0) {
-            QList<QVariant> ifaceList = QVariant::fromValue(value).toList();
+            QList<QVariant> ifaceList = value.variant().toList();
             for (int i = 0; i < ifaceList.count(); i++) {
                 QString ifaceName = ifaceList.at(i).toString();
                 if (ifaceName == "org.ofono.NetworkRegistration") {
@@ -90,6 +90,6 @@ void OfonoModem::onModemPropertyChanged(QString name, QDBusVariant value) {
 
 void OfonoModem::onNetworkPropertyChanged(QString name, QDBusVariant value) {
     if (name == "Name") {
-        NetNameChanged(QVariant::fromValue(value).toString());
+        NetNameChanged(value.variant().toString());
     }
 }
