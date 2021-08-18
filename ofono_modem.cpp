@@ -16,12 +16,12 @@ OfonoModem::OfonoModem(QString path) {
             if (ifaceName == "org.ofono.NetworkRegistration") {
                 this->network = new org::ofono::NetworkRegistration("org.ofono", 
                     path, QDBusConnection::systemBus());
-                connect(this->network, SIGNAL(PropertyChanged(QString, QVariant)), this, SLOT(onNetworkPropertyChanged(QString, QVariant)));
+                connect(this->network, SIGNAL(PropertyChanged(QString, QDBusVariant)), this, SLOT(onNetworkPropertyChanged(QString, QDBusVariant)));
             }
         }
     }
     
-    connect(this->modem, SIGNAL(PropertyChanged(QString, QVariant)), this, SLOT(onModemPropertyChanged(QString, QVariant)));
+    connect(this->modem, SIGNAL(PropertyChanged(QString, QDBusVariant)), this, SLOT(onModemPropertyChanged(QString, QDBusVariant)));
 }
 
 bool OfonoModem::GetOnline() {
@@ -59,32 +59,32 @@ QString OfonoModem::GetNetName() {
     return "";
 }
 
-void OfonoModem::onModemPropertyChanged(QString name, QVariant value) {
+void OfonoModem::onModemPropertyChanged(QString name, QDBusVariant value) {
     if (name == "Online") {
-        OnlineChanged(value.toBool());
+        OnlineChanged(QVariant::fromValue(value).toBool());
     }
 
     if (name == "Powered") {
-        PowerChanged(value.toBool());
+        PowerChanged(QVariant::fromValue(value).toBool());
     }
 
     if (name == "Interfaces") {
         if (this->network == 0) {
-            QList<QVariant> ifaceList = value.toList();
+            QList<QVariant> ifaceList = QVariant::fromValue(value).toList();
             for (int i = 0; i < ifaceList.count(); i++) {
                 QString ifaceName = ifaceList.at(i).toString();
                 if (ifaceName == "org.ofono.NetworkRegistration") {
                     this->network = new org::ofono::NetworkRegistration("org.ofono", 
                         path, QDBusConnection::systemBus());
-                    connect(this->network, SIGNAL(PropertyChanged(QString, QVariant)), this, SLOT(onNetworkPropertyChanged(QString, QVariant)));
+                    connect(this->network, SIGNAL(PropertyChanged(QString, QDBusVariant)), this, SLOT(onNetworkPropertyChanged(QString, QDBusVariant)));
                 }
             }
         }
     }
 }
 
-void OfonoModem::onNetworkPropertyChanged(QString name, QVariant value) {
+void OfonoModem::onNetworkPropertyChanged(QString name, QDBusVariant value) {
     if (name == "Name") {
-        NetNameChanged(value.toString());
+        NetNameChanged(QVariant::fromValue(value).toString());
     }
 }

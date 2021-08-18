@@ -25,8 +25,8 @@ public Q_SLOTS:
 
     QString GetNetName();
 
-    void onModemPropertyChanged(QString name, QVariant value);
-    void onNetworkPropertyChanged(QString name, QVariant value);
+    void onModemPropertyChanged(QString name, QDBusVariant value);
+    void onNetworkPropertyChanged(QString name, QDBusVariant value);
 Q_SIGNALS:
     void OnlineChanged(bool online);
     void PowerChanged(bool power);
