@@ -2,7 +2,7 @@
 #include "backlight.h"
 #include "atmosphere.h"
 #include "ofono.h"
-#include "cutiepishellcommunityproject_adaptor.h"
+#include "cutie_shell_adaptor.h"
 
 int main(int argc, char *argv[])
 {
