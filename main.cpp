@@ -18,11 +18,11 @@ int main(int argc, char *argv[])
     new AtmosphereAdaptor(atmosphere);
     new OfonoAdaptor(ofono);
 
-    connection.registerObject("/com/github/CutiePiShellCommunityProject/backlight", backlight);
-    connection.registerObject("/com/github/CutiePiShellCommunityProject/atmosphere", atmosphere);
-    connection.registerObject("/com/github/CutiePiShellCommunityProject/modem", ofono);
+    connection.registerObject("/backlight", backlight);
+    connection.registerObject("/atmosphere", atmosphere);
+    connection.registerObject("/modem", ofono);
 
-    connection.registerService("com.github.CutiePiShellCommunityProject.SettingsDaemon");
+    connection.registerService("org.cutie_shell.SettingsDaemon");
 
     return app.exec();
 }

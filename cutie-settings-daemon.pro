@@ -32,7 +32,7 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /usr/bin
 !isEmpty(target.path): INSTALLS += target
 
-dbusdaemon.files = com.github.CutiePiShellCommunityProject.xml
+dbusdaemon.files = org.cutie_shell.xml
 dbusdaemon.header_flags = -i backlight.h -i atmosphere.h -i ofono.h
 
 DBUS_ADAPTORS += \
@@ -43,7 +43,7 @@ DBUS_INTERFACES += \
         ofono.xml \
         ofono_modem.xml
 
-dbuspolicy.files = com.github.CutiePiShellCommunityProject.SettingsDaemon.conf
+dbuspolicy.files = org.cutie_shell.SettingsDaemon.conf
 dbuspolicy.path = /usr/share/dbus-1/system.d/
 
 systemdservice.files = cutie-settings-daemon.service
