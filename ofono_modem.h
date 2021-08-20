@@ -24,6 +24,7 @@ public Q_SLOTS:
     void PowerModem(bool power);
 
     QString GetNetName();
+    uchar GetNetStrength();
 
     void onModemPropertyChanged(QString name, QDBusVariant value);
     void onNetworkPropertyChanged(QString name, QDBusVariant value);
@@ -31,6 +32,7 @@ Q_SIGNALS:
     void OnlineChanged(bool online);
     void PowerChanged(bool power);
     void NetNameChanged(QString name);
+    void NetStrengthChanged(uchar name);
 };
 
 #endif // OFONO_MODEM_H

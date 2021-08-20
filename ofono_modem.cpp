@@ -60,6 +60,16 @@ QString OfonoModem::GetNetName() {
     return "";
 }
 
+uchar OfonoModem::GetNetStrength() {
+    if (network == 0) return 0;
+    QDBusPendingReply<QVariantMap> netProperties = network->GetProperties();
+    netProperties.waitForFinished();
+    if (!netProperties.isError()) {    
+        return netProperties.value().value("Strength").value<uchar>();
+    }
+    return 0;
+}
+
 void OfonoModem::onModemPropertyChanged(QString name, QDBusVariant value) {
     if (name == "Online") {
         OnlineChanged(value.variant().toBool());
@@ -82,6 +92,7 @@ void OfonoModem::onModemPropertyChanged(QString name, QDBusVariant value) {
                     netProperties.waitForFinished();
                     if (!netProperties.isError()) {    
                         NetNameChanged(netProperties.value().value("Name").toString());
+                        NetStrengthChanged(netProperties.value().value("Strength").value<uchar>());
                     }
                 }
             }
@@ -92,5 +103,9 @@ void OfonoModem::onModemPropertyChanged(QString name, QDBusVariant value) {
 void OfonoModem::onNetworkPropertyChanged(QString name, QDBusVariant value) {
     if (name == "Name") {
         NetNameChanged(value.variant().toString());
+    }
+
+    if (name == "Strength") {
+        NetStrengthChanged(value.variant().value<uchar>());
     }
 }
