@@ -51,6 +51,7 @@ void OfonoModem::PowerModem(bool power){
 }
 
 QString OfonoModem::GetNetName() {
+    if (network == 0) return "";
     QDBusPendingReply<QVariantMap> netProperties = network->GetProperties();
     netProperties.waitForFinished();
     if (!netProperties.isError()) {    
