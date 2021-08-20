@@ -1,5 +1,5 @@
 [Unit]
-Description=CutiePiShellCommunityProject settings Daemon
+Description=Cutie Shell Settings Daemon
 
 After=systemd-user-sessions.service
 
@@ -9,6 +9,8 @@ After=dbus.socket
 After=session-c1.scope
 
 After=lxc@android.service
+
+After=ofono.service
 
 Before=cutie-ui-io.service
 Before=graphical.target
