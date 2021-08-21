@@ -11,10 +11,8 @@ Ofono::Ofono(QDBusConnection *connection)
 
     this->modemList = new QList<OfonoModem *>();
 
-    qDBusRegisterMetaType<ofonoPair>();
-    qDBusRegisterMetaType<OfonoServices>();
 
-    QDBusPendingReply<OfonoServices> ofonoModems = this->ofono->GetModems();
+    QDBusPendingReply<ServiceList> ofonoModems = this->ofono->GetModems();
     connect(this->ofono, SIGNAL(ModemAdded(QDBusObjectPath, QVariantMap)), this, SLOT(onModemAdded(QDBusObjectPath, QVariantMap)));
     ofonoModems.waitForFinished();
     if (!ofonoModems.isError()) {

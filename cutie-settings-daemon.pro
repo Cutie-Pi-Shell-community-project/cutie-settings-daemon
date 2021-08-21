@@ -11,13 +11,16 @@ SOURCES += \
         atmosphere.cpp \
         ofono.cpp \
         ofono_modem.cpp \
+        connman.cpp \
         main.cpp
 
 HEADERS += \
         backlight.h \
         atmosphere.h \
         ofono.h \
-        ofono_modem.h
+        ofono_modem.h \
+        connman.h \
+        structures.h
 
 LIBS += -ludev
 
@@ -35,13 +38,17 @@ else: unix:!android: target.path = /usr/bin
 dbusdaemon.files = org.cutie_shell.xml
 dbusdaemon.header_flags = -i backlight.h -i atmosphere.h -i ofono.h
 
+connmand.files = connman.xml
+connmand.header_flags = -i structures.h
+
 DBUS_ADAPTORS += \
         dbusdaemon 
 
 DBUS_INTERFACES += \
         dbusdaemon \
         ofono.xml \
-        ofono_modem.xml
+        ofono_modem.xml \
+        connmand
 
 dbuspolicy.files = org.cutie_shell.SettingsDaemon.conf
 dbuspolicy.path = /usr/share/dbus-1/system.d/

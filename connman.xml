@@ -1,0 +1,21 @@
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN"
+"http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<node>
+    <interface name="net.connman.Manager">
+        <method name="GetServices">
+            <arg name="services" type="a(oa{sv})" direction="out"/>
+            <annotation name="org.qtproject.QtDBus.QtTypeName.Out0" value="ServiceList"/>
+        </method>
+        <signal name="ServicesChanged">
+            <arg name="changed" type="a(oa{sv})" direction="out"/>
+            <annotation name="org.qtproject.QtDBus.QtTypeName.Out0" value="ServiceList"/>
+            <arg name="removed" type="ao" direction="out"/>
+        </signal>
+    </interface>
+    <interface name="net.connman.Service">
+        <signal name="PropertyChanged">
+            <arg name="name" type="s" direction="out"/>
+            <arg name="value" type="v" direction="out"/>
+        </signal>
+    </interface>
+</node>

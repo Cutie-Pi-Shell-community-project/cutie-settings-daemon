@@ -4,15 +4,12 @@
 #include <QDebug>
 #include <iostream>
 
+#include "structures.h"
+
 #include "ofono_interface.h"
 #include "ofono_modem_interface.h"
 #include "ofono_modem.h"
 
-typedef QPair<QDBusObjectPath, QVariantMap> ofonoPair;
-typedef QList<ofonoPair> OfonoServices;
-
-Q_DECLARE_METATYPE(ofonoPair)
-Q_DECLARE_METATYPE(OfonoServices)
 
 class Ofono : public QObject
 {
