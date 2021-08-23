@@ -1,0 +1,17 @@
+Source: cutie-settings-daemon
+Section: libs
+Maintainer: Erik Inkinen <erik.inkinen@gmail.com>
+Priority: optional
+Build-Depends: pkg-kde-tools,
+               qt5-qmake,
+               qtbase5-dev,
+               pkg-config,
+               libudev-dev
+Standards-Version: 4.5.1
+
+Package: cutie-settings-daemon
+Architecture: any
+Multi-Arch: foreign
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: This package contains Cutie's settings daemon.
