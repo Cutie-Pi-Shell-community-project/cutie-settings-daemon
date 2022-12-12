@@ -1,4 +1,4 @@
-#include "ofono.h"
+#include "modems.h"
 
 OfonoModem::OfonoModem(QString path) {
     this->modem = new org::ofono::Modem("org.ofono", 

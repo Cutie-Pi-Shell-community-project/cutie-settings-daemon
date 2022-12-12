@@ -1,5 +1,5 @@
-#ifndef OFONO_H
-#define OFONO_H
+#ifndef MODEMS_H
+#define MODEMS_H
 
 #include <QDebug>
 #include <iostream>
@@ -11,20 +11,20 @@
 #include "ofono_modem.h"
 
 
-class Ofono : public QObject
+class Modems : public QObject
 {
     Q_OBJECT
 private:
     org::ofono::Manager *ofono;
-    QList<OfonoModem *> *modemList;
+    QList<OfonoModem *> *ofonoModemList;
     QDBusConnection *connection;
 public:
-    Ofono(QDBusConnection *connection);
+    Modems(QDBusConnection *connection);
 public Q_SLOTS:
     unsigned int ModemCount();
-    void onModemAdded(QDBusObjectPath path, QVariantMap properties);
+    void onOfonoModemAdded(QDBusObjectPath path, QVariantMap properties);
 Q_SIGNALS:
     void ModemAdded(QDBusObjectPath path);
 };
 
-#endif // OFONO_H
+#endif // MODEM_H

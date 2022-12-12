@@ -1,10 +1,10 @@
 #include "connman.h"
+#include "networks.h"
 #include "cutie_shell_adaptor.h"
 
 Connman::Connman(QDBusConnection *connection)
+	: connection(connection)
 {
-    this->connection = connection;
-
     this->connman = new net::connman::Manager(
         "net.connman", "/",
         QDBusConnection::systemBus());
@@ -16,15 +16,8 @@ Connman::Connman(QDBusConnection *connection)
     findCurrentConnection();
 }
 
-uchar Connman::GetWifiStrength() {
-    return wifiStrength;
-}
-
-QString Connman::GetWifiName() {
-    return wifiName;
-}
-
 void Connman::onServicesChanged(ServiceList changed, QList<QDBusObjectPath> removed) {
+    Q_UNUSED(changed)
     for (int i = 0; i < removed.count(); i++) {
         if (removed.at(i).path() == wifiPath.path()) {
             findCurrentConnection();
@@ -103,4 +96,12 @@ void Connman::findCurrentConnection() {
 
     WifiNameChanged(wifiName);
     WifiStrengthChanged(wifiStrength);
+}
+
+uchar Connman::getWifiStrength() {
+    return wifiStrength;
+}
+
+QString Connman::getWifiName() {
+    return wifiName;
 }

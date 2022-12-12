@@ -1,7 +1,7 @@
-#include "ofono.h"
+#include "modems.h"
 #include "cutie_shell_adaptor.h"
 
-Ofono::Ofono(QDBusConnection *connection)
+Modems::Modems(QDBusConnection *connection)
 {
     this->connection = connection;
 
@@ -9,16 +9,15 @@ Ofono::Ofono(QDBusConnection *connection)
         "org.ofono", "/",
         QDBusConnection::systemBus());
 
-    this->modemList = new QList<OfonoModem *>();
-
+    this->ofonoModemList = new QList<OfonoModem *>();
 
     QDBusPendingReply<ServiceList> ofonoModems = this->ofono->GetModems();
-    connect(this->ofono, SIGNAL(ModemAdded(QDBusObjectPath, QVariantMap)), this, SLOT(onModemAdded(QDBusObjectPath, QVariantMap)));
+    connect(this->ofono, SIGNAL(ModemAdded(QDBusObjectPath, QVariantMap)), this, SLOT(onOfonoModemAdded(QDBusObjectPath, QVariantMap)));
     ofonoModems.waitForFinished();
     if (!ofonoModems.isError()) {
         for (int i = 0; i < ofonoModems.value().count(); i++) {
             OfonoModem *modem = new OfonoModem(ofonoModems.value().at(i).first.path());
-            this->modemList->append(modem);
+            this->ofonoModemList->append(modem);
             new ModemAdaptor(modem);
             connection->registerObject(QString("/modem/").append(QString::number(i)), modem);
             QDBusObjectPath newPath;
@@ -28,16 +27,17 @@ Ofono::Ofono(QDBusConnection *connection)
     }
 }
 
-unsigned int Ofono::ModemCount() {
-    return modemList->count();
+unsigned int Modems::ModemCount() {
+    return ofonoModemList->count();
 }
 
-void Ofono::onModemAdded(QDBusObjectPath path, QVariantMap properties) {
+void Modems::onOfonoModemAdded(QDBusObjectPath path, QVariantMap properties) {
+    Q_UNUSED(properties);
     OfonoModem *modem = new OfonoModem(path.path());
-    this->modemList->append(modem);
+    this->ofonoModemList->append(modem);
     new ModemAdaptor(modem);
-    connection->registerObject(QString("/modem/").append(QString::number(modemList->count() - 1)), modem);
+    connection->registerObject(QString("/modem/").append(QString::number(ofonoModemList->count() - 1)), QString("Modem"), modem);
     QDBusObjectPath newPath;
-    newPath.setPath(QString("/modem/").append(QString::number(modemList->count() - 1)));
+    newPath.setPath(QString("/modem/").append(QString::number(ofonoModemList->count() - 1)));
     ModemAdded(newPath);
 }

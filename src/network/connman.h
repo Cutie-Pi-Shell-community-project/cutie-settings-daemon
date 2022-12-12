@@ -6,6 +6,8 @@
 #include "structures.h"
 #include "connman_interface.h"
 
+class Network;
+
 class Connman : public QObject
 {
     Q_OBJECT
@@ -15,14 +17,15 @@ private:
     net::connman::Service *wifi = 0;
     QDBusConnection *connection;
     QDBusObjectPath wifiPath;
-    uchar wifiStrength = 0;
-    QString wifiName = "";
+    uchar wifiStrength;
+    QString wifiName;
     void findCurrentConnection();
+    Network *parent;
 public:
     Connman(QDBusConnection *connection);
+    uchar getWifiStrength();
+    QString getWifiName();
 public Q_SLOTS:
-    uchar GetWifiStrength();
-    QString GetWifiName();
     void onServicesChanged(ServiceList changed, QList<QDBusObjectPath> removed);
     void onWifiPropertyChanged(QString name, QDBusVariant value);
 Q_SIGNALS:

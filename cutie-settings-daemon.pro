@@ -7,20 +7,24 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-        backlight.cpp \
-        atmosphere.cpp \
-        ofono.cpp \
-        ofono_modem.cpp \
-        connman.cpp \
-        main.cpp
+        src/backlight.cpp \
+        src/atmosphere.cpp \
+        src/modem/modems.cpp \
+        src/modem/ofono_modem.cpp \
+        src/network/connman.cpp \
+        src/network/networks.cpp \
+        src/main.cpp
 
 HEADERS += \
-        backlight.h \
-        atmosphere.h \
-        ofono.h \
-        ofono_modem.h \
-        connman.h \
-        structures.h
+        src/backlight.h \
+        src/atmosphere.h \
+        src/modem/modems.h \
+        src/modem/ofono_modem.h \
+        src/network/connman.h \
+        src/network/networks.h \
+        src/structures.h
+
+INCLUDEPATH += src src/modem src/network
 
 LIBS += -ludev
 
@@ -35,10 +39,10 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /usr/bin
 !isEmpty(target.path): INSTALLS += target
 
-dbusdaemon.files = org.cutie_shell.xml
-dbusdaemon.header_flags = -i backlight.h -i atmosphere.h -i ofono.h
+dbusdaemon.files = src/org.cutie_shell.xml
+dbusdaemon.header_flags = -i backlight.h -i atmosphere.h -i modems.h -i networks.h
 
-connmand.files = connman.xml
+connmand.files = src/network/connman.xml
 connmand.header_flags = -i structures.h
 
 DBUS_ADAPTORS += \
@@ -46,14 +50,14 @@ DBUS_ADAPTORS += \
 
 DBUS_INTERFACES += \
         dbusdaemon \
-        ofono.xml \
-        ofono_modem.xml \
+        src/modem/ofono.xml \
+        src/modem/ofono_modem.xml \
         connmand
 
-dbuspolicy.files = org.cutie_shell.SettingsDaemon.conf
+dbuspolicy.files = data/org.cutie_shell.SettingsDaemon.conf
 dbuspolicy.path = /usr/share/dbus-1/system.d/
 
-systemdservice.files = cutie-settings-daemon.service
+systemdservice.files = data/cutie-settings-daemon.service
 systemdservice.path = /usr/lib/systemd/system/
 
 INSTALLS += dbuspolicy systemdservice
