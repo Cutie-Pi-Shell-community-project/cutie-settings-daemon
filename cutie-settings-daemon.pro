@@ -11,8 +11,13 @@ SOURCES += \
         src/atmosphere.cpp \
         src/modem/modems.cpp \
         src/modem/ofono_modem.cpp \
-        src/network/connman.cpp \
-        src/network/networks.cpp \
+        src/network/networkmanager.cpp \
+        src/network/nmwlandevice.cpp \
+        src/network/nmaccesspoint.cpp \
+        src/network/networkbackend.cpp \
+        src/network/networkdevice.cpp \
+        src/network/networkconnection.cpp \
+        src/network/networking.cpp \
         src/main.cpp
 
 HEADERS += \
@@ -20,8 +25,13 @@ HEADERS += \
         src/atmosphere.h \
         src/modem/modems.h \
         src/modem/ofono_modem.h \
-        src/network/connman.h \
-        src/network/networks.h \
+        src/network/networkmanager.h \
+        src/network/nmwlandevice.h \
+        src/network/nmaccesspoint.h \
+        src/network/networkbackend.h \
+        src/network/networkdevice.h \
+        src/network/networkconnection.h \
+        src/network/networking.h \
         src/structures.h
 
 INCLUDEPATH += src src/modem src/network
@@ -40,10 +50,9 @@ else: unix:!android: target.path = /usr/bin
 !isEmpty(target.path): INSTALLS += target
 
 dbusdaemon.files = src/org.cutie_shell.xml
-dbusdaemon.header_flags = -i backlight.h -i atmosphere.h -i modems.h -i networks.h
-
-connmand.files = src/network/connman.xml
-connmand.header_flags = -i structures.h
+dbusdaemon.header_flags = -i backlight.h \
+	-i atmosphere.h -i modems.h \
+	-i networking.h
 
 DBUS_ADAPTORS += \
         dbusdaemon 
@@ -51,8 +60,7 @@ DBUS_ADAPTORS += \
 DBUS_INTERFACES += \
         dbusdaemon \
         src/modem/ofono.xml \
-        src/modem/ofono_modem.xml \
-        connmand
+        src/modem/ofono_modem.xml
 
 dbuspolicy.files = data/org.cutie_shell.SettingsDaemon.conf
 dbuspolicy.path = /usr/share/dbus-1/system.d/
