@@ -41,12 +41,25 @@ void NetworkManager::onDeviceAdded(QDBusObjectPath path) {
         if (type == 2) { // Wireless LAN
             NetworkDevice *newDev = new NMWlanDevice(m_connection, path);
             m_devices.append(newDev);
+            m_devicesByPath.insert(path.path(), newDev);
             new NetworkDeviceAdaptor(newDev);
-            QString path = QString("/networking/device/").append(
+            QString newpath = QString("/networking/device/").append(
                 QString::number(NetworkBackend::next_id++));
-            m_connection->registerObject(path, newDev);
-            m_devicePaths.append(QDBusObjectPath(path));
+            m_connection->registerObject(newpath, newDev);
+            m_exportMap.insert(path.path(), QDBusObjectPath(newpath));
+            m_devicePaths.append(QDBusObjectPath(newpath));
             emit DevicesChanged(m_devicePaths);
         }
     }
+}
+
+void NetworkManager::onDeviceRemoved(QDBusObjectPath path) {
+    NetworkDevice *oldDev = m_devicesByPath.value(path.path());
+    if (!oldDev) return;
+    m_devices.removeAll(oldDev);
+    QDBusObjectPath oldExport = m_exportMap.value(path.path());
+    m_connection->unregisterObject(oldExport.path());
+    m_devicePaths.removeAll(oldExport);
+    m_exportMap.remove(path.path());
+    emit DevicesChanged(m_devicePaths);
 }
