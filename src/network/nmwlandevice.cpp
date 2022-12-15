@@ -41,6 +41,14 @@ NMWlanDevice::NMWlanDevice(QDBusConnection *connection, QDBusObjectPath path)
     connection->connect(
         "org.freedesktop.NetworkManager",
         m_path.path(), 
+        "org.freedesktop.NetworkManager.Device.Wireless", 
+        "AccessPointRemoved", 
+        this, SLOT(onAPRemoved(QDBusObjectPath))
+    );
+
+    connection->connect(
+        "org.freedesktop.NetworkManager",
+        m_path.path(), 
         "org.freedesktop.DBus.Properties", 
         "PropertiesChanged", 
         this, SLOT(onPropertiesChanged(QString,QMap<QString, QVariant>,QStringList))
@@ -57,6 +65,17 @@ void NMWlanDevice::onAPAdded(QDBusObjectPath path) {
     m_connection->registerObject(newPath, newAP);
     m_apPaths.append(QDBusObjectPath(newPath));
     m_pathMap.insert(path.path(), QDBusObjectPath(newPath));
+    emit ServicesChanged(m_apPaths);
+}
+
+void NMWlanDevice::onAPRemoved(QDBusObjectPath path) {
+    m_services.removeAll(m_aps_by_path.value(path.path()));
+    m_apPaths.removeAll(m_pathMap.value(path.path()));
+    m_connection->unregisterObject(m_pathMap.value(path.path()).path());
+    m_pathMap.remove(path.path());
+    NMAccessPoint *rem = m_aps_by_path.value(path.path());
+    m_aps_by_path.remove(path.path());
+    delete rem;
     emit ServicesChanged(m_apPaths);
 }
 

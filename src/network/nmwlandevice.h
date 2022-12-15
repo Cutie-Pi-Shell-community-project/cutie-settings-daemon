@@ -24,6 +24,7 @@ private:
     QMap<QString, QDBusObjectPath> m_pathMap;
 public Q_SLOTS:
     void onAPAdded(QDBusObjectPath path);
+    void onAPRemoved(QDBusObjectPath path);
     void onPropertiesChanged(
 	QString iface, 
 	QMap<QString, QVariant> changed, 
