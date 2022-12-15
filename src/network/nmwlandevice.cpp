@@ -26,8 +26,14 @@ NMWlanDevice::NMWlanDevice(QDBusConnection *connection, QDBusObjectPath path)
     );
 
     QDBusObjectPath nmPath = activeAPReply.value().variant().value<QDBusObjectPath>();
-    m_active_service = m_aps_by_path.value(nmPath.path());
-    m_active_service_path = m_pathMap.value(nmPath.path());
+
+    if (m_pathMap.contains(nmPath.path())) {
+	m_active_service = m_aps_by_path.value(nmPath.path());
+	m_active_service_path = m_pathMap.value(nmPath.path());
+    } else {
+	m_active_service = nullptr;
+	m_active_service_path = QDBusObjectPath("/");
+    }
     emit ActiveServiceChanged(m_active_service_path);
 
     connection->connect(
