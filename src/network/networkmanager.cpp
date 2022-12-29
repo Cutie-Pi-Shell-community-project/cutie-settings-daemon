@@ -8,6 +8,16 @@ NetworkManager::NetworkManager(QDBusConnection *connection)
 	    "org.freedesktop.NetworkManager",
         QDBusConnection::systemBus()
     ) {
+    
+    QDBusInterface(
+	    "org.freedesktop.NetworkManager",
+        "/org/freedesktop/NetworkManager/AgentManager", 
+	    "org.freedesktop.NetworkManager.AgentManager",
+        QDBusConnection::systemBus()
+    ).call(
+        "Register", "org.cutie_shell"
+    );
+
     QDBusReply<QList<QDBusObjectPath>> devicesReply = nm.call(QLatin1String("GetDevices"));
     QList<QDBusObjectPath> devices = devicesReply.value();
 
