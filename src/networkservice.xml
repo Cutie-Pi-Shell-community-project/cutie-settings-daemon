@@ -1,0 +1,12 @@
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN"
+"http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<node>
+  <interface name="org.cutie_shell.SettingsDaemon.NetworkService">
+    <property name="DisplayName" type="s" access="read"/>
+    <property name="Strength" type="y" access="read"/>
+    <property name="Wireless" type="b" access="read"/>
+    <signal name="StrengthChanged">
+      <arg type="y" name="Strength" direction="out"/>
+    </signal>  
+  </interface>
+</node>

@@ -1,6 +1,7 @@
 #ifndef BACKLIGHT_H
 #define BACKLIGHT_H
 
+#include <QObject>
 #include <QDebug>
 #include <libudev.h>
 #include <iostream>

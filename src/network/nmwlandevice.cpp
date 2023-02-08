@@ -1,4 +1,5 @@
 #include "nmwlandevice.h"
+#include "NetworkServiceAdaptor.h"
 
 NMWlanDevice::NMWlanDevice(QDBusConnection *connection, QDBusObjectPath path) 
     : NetworkDevice(connection), m_path(path), m_device(

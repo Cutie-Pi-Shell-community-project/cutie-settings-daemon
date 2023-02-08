@@ -1,5 +1,5 @@
 #include "networking.h"
-#include "cutie_shell_adaptor.h"
+#include "NetworkBackendAdaptor.h"
 
 Networking::Networking(QDBusConnection *connection)
     : connection(connection) {

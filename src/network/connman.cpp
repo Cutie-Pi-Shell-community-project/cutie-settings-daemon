@@ -1,6 +1,6 @@
 #include "connman.h"
 #include "networks.h"
-#include "cutie_shell_adaptor.h"
+#include "NetworkDeviceAdaptor.h"
 
 Connman::Connman(QDBusConnection *connection)
 	: connection(connection)

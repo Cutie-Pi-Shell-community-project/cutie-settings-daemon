@@ -8,7 +8,6 @@
 #include "structures.h"
 #include "networkdevice.h"
 #include "nmaccesspoint.h"
-#include "cutie_shell_adaptor.h"
 
 class NMAccessPoint;
 

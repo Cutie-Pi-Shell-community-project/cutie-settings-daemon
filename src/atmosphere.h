@@ -1,6 +1,7 @@
 #ifndef ATMOSPHERE_H
 #define ATMOSPHERE_H
 
+#include <QObject>
 #include <QDebug>
 #include <iostream>
 

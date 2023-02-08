@@ -3,8 +3,8 @@ Section: libs
 Maintainer: Erik Inkinen <erik.inkinen@gmail.com>
 Priority: optional
 Build-Depends: pkg-kde-tools,
-               qt5-qmake,
-               qtbase5-dev,
+               cmake,
+               qt6-base-dev,
                pkg-config,
                libudev-dev
 Standards-Version: 4.5.1

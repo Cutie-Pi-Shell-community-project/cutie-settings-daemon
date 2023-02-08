@@ -3,7 +3,10 @@
 #include "atmosphere.h"
 #include "modems.h"
 #include "networking.h"
-#include "cutie_shell_adaptor.h"
+#include "AtmosphereAdaptor.h"
+#include "BacklightAdaptor.h"
+#include "ModemsAdaptor.h"
+#include "NetworkingAdaptor.h"
 #include "structures.h"
 
 int main(int argc, char *argv[])

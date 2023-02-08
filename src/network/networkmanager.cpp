@@ -1,5 +1,5 @@
 #include "networking.h"
-#include "cutie_shell_adaptor.h"
+#include "NetworkDeviceAdaptor.h"
 
 NetworkManager::NetworkManager(QDBusConnection *connection)
 	: NetworkBackend(connection), nm(

@@ -1,5 +1,5 @@
 #include "modems.h"
-#include "cutie_shell_adaptor.h"
+#include "ModemAdaptor.h"
 
 Modems::Modems(QDBusConnection *connection)
 {
