@@ -3,6 +3,8 @@ project(cutie-settings-daemon VERSION 1.0 LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
+include( GNUInstallDirs )
+
 set(CMAKE_AUTOMOC ON)
 
 find_package(QT NAMES Qt6 REQUIRED COMPONENTS Core)
